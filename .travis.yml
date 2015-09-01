@@ -41,7 +41,7 @@ before_install:
   - cd "$LETSENCRYPT_PATH"
   - virtualenv --no-site-packages -p python2 ./venv
   - travis_retry ./venv/bin/pip install -U setuptools  # #681
-  - travis_retry ./venv/bin/pip install -r requirements.txt -e acme -e . -e letsencrypt-apache -e letsencrypt-nginx
+  - ./venv/bin/pip install mock
   - "cd -"
 
 env:
