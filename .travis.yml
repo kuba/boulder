@@ -42,6 +42,8 @@ before_install:
   - virtualenv --no-site-packages -p python2 ./venv
   - travis_retry ./venv/bin/pip install -U setuptools  # #681
   - ./venv/bin/pip install mock
+  - ./venv/bin/pip freeze
+  - ./venv/bin/python -c "import mock"
   - "cd -"
 
 env:
@@ -52,4 +54,4 @@ env:
     - SKIP_UNIT_TESTS=1
 
 script:
-  - ./venv/bin/pip freeze
+  - echo OK
