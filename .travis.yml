@@ -17,7 +17,6 @@ addons:
       - libffi-dev
       - ca-certificates
       - rsyslog
-  mariadb: "10.0"
 
 sudo: false
 
@@ -35,14 +34,11 @@ before_install:
   # someone forks the repo, Travis won't pass on their own repo. To fix that,
   # we add a symlink.
   - python --version
-  - mkdir -p $TRAVIS_BUILD_DIR $GOPATH/src/github.com/letsencrypt
-  - test ! -d $GOPATH/src/github.com/letsencrypt/boulder && ln -s $TRAVIS_BUILD_DIR $GOPATH/src/github.com/letsencrypt/boulder || true
-  - git clone -b mock-2.6 https://www.github.com/kuba/letsencrypt.git "$LETSENCRYPT_PATH"
+  - mkdir "$LETSENCRYPT_PATH"
   - cd "$LETSENCRYPT_PATH"
   - virtualenv --no-site-packages -p python2 ./venv
   - travis_retry ./venv/bin/pip install -U setuptools  # #681
-  - travis_retry ./venv/bin/pip install -r requirements.txt -e acme -e . -e letsencrypt-apache -e letsencrypt-nginx
-  - "cd -"
+  - travis_retry ./venv/bin/pip install mock
 
 env:
   global:
@@ -53,3 +49,4 @@ env:
 
 script:
   - ./venv/bin/pip freeze
+  - ./venv/bin/python -c "import mock"
