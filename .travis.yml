@@ -52,4 +52,4 @@ env:
     - SKIP_UNIT_TESTS=1
 
 script:
-  - echo OK
+  - ./venv/bin/pip freeze
